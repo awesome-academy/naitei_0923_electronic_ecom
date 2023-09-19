@@ -15,6 +15,8 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        @laravelViewsStyles(laravel-views,tailwindcss,livewire)
+        @livewireStyles
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -34,5 +36,7 @@
                 {{ $slot }}
             </main>
         </div>
+        @livewireScripts
+        @laravelViewsScripts(laravel-views,livewire,alpine)
     </body>
 </html>

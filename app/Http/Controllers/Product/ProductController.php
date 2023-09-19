@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Models\Product;
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
-use App\Models\Product;
 
 class ProductController extends Controller
 {
     public function index()
     {
         $products = Product::paginate(20);
+        $categories = Category::with('products')->get();
 
-        return response()->json([
-            "data" => $products,
+        return view('product.index', [
+            'products' => $products,
+            'categories' => $categories,
         ]);
     }
 
@@ -22,8 +25,8 @@ class ProductController extends Controller
     {
         $product = Product::with('reviews.user', 'category')->find($productId);
 
-        return response()->json([
-            "data" => $product,
+        return view('product.show', [
+            'product' => $product,
         ]);
     }
 
